@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Py Surfers</title>
+		<link rel="stylesheet" href="styles/style.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Caveat:wght@400..700&family=DynaPuff:wght@400..700&display=swap"
+			rel="stylesheet"
+		/>
+	</head>
+	<body>
+		<div class="overlay"></div>
+		<nav>
+			<div id="logo">
+				<img
+					src="./assets/images/snake.png"
+					width="40px"
+					height="40px"
+					alt=""
+				/>
+				<span>PySurfers</span>
+			</div>
+			<div class="settings">
+				<a href="./pages/controls.html">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="26"
+						height="26"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-settings-icon lucide-settings setting-icon"
+					>
+						<path
+							d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"
+						/>
+						<circle cx="12" cy="12" r="3" />
+					</svg>
+				</a>
+			</div>
+		</nav>
+		<div class="score-container">
+			<p>Score: <span class="score">0</span></p>
+			<p>High Score: <span class="highScore">0</span></p>
+		</div>
+		<main>
+			<div class="container">
+				<div class="snake-head"></div>
+				<div class="snake-body"></div>
+			</div>
+			<div class="mobile-controls">
+				<button class="m-control top">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-chevron-up-icon lucide-chevron-up"
+					>
+						<path d="m18 15-6-6-6 6" />
+					</svg>
+				</button>
+				<button class="m-control bottom">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-chevron-down-icon lucide-chevron-down"
+					>
+						<path d="m6 9 6 6 6-6" />
+					</svg>
+				</button>
+				<button class="m-control left">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-chevron-left-icon lucide-chevron-left"
+					>
+						<path d="m15 18-6-6 6-6" />
+					</svg>
+				</button>
+				<button class="m-control right">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-chevron-right-icon lucide-chevron-right"
+					>
+						<path d="m9 18 6-6-6-6" />
+					</svg>
+				</button>
+			</div>
+		</main>
+	</body>
+	<script src="./js/script.js"></script>
+</html>
