@@ -8,11 +8,49 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
+			rel="shortcut icon"
+			href="./assets/favicon.ico"
+			type="image/x-icon"
+		/>
+		<link
 			href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Caveat:wght@400..700&family=DynaPuff:wght@400..700&display=swap"
 			rel="stylesheet"
 		/>
 	</head>
 	<body>
+		<div id="instructions-container" class="hidden">
+			<div id="instructions">
+				<h2 id="i-title">Welcome To PySnake</h2>
+				<div class="rules">
+					<h4>Instructions</h4>
+					<p>
+						- To Move <span class="move">Up,</span> Press
+						<span class="key">W</span> or
+						<span class="key">ArrowUp</span>
+					</p>
+					<p>
+						- To Move <span class="move">Down,</span> Press
+						<span class="key">S</span> or
+						<span class="key">ArrowDown</span>
+					</p>
+					<p>
+						- To Move <span class="move">Left,</span> Press
+						<span class="key">A</span> or
+						<span class="key">ArrowLeft</span>
+					</p>
+					<p>
+						- To Move <span class="move">Right,</span> Press
+						<span class="key">D</span> or
+						<span class="key">ArrowRight</span>
+					</p>
+					<p class="last">
+						Press <span class="key">P</span> To Pause, any above key
+						to continue
+					</p>
+					<button class="start">Start</button>
+				</div>
+			</div>
+		</div>
 		<div class="overlay"></div>
 		<nav>
 			<div id="logo">
@@ -56,7 +94,7 @@
 				<div class="snake-body"></div>
 			</div>
 			<div class="mobile-controls">
-				<button class="m-control top">
+				<button class="m-control top" value="w">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -68,11 +106,12 @@
 						stroke-linecap="round"
 						stroke-linejoin="round"
 						class="lucide lucide-chevron-up-icon lucide-chevron-up"
+						style="pointer-events: none"
 					>
 						<path d="m18 15-6-6-6 6" />
 					</svg>
 				</button>
-				<button class="m-control bottom">
+				<button class="m-control bottom" value="s">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -84,11 +123,12 @@
 						stroke-linecap="round"
 						stroke-linejoin="round"
 						class="lucide lucide-chevron-down-icon lucide-chevron-down"
+						style="pointer-events: none"
 					>
 						<path d="m6 9 6 6 6-6" />
 					</svg>
 				</button>
-				<button class="m-control left">
+				<button class="m-control left" value="a">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -100,11 +140,12 @@
 						stroke-linecap="round"
 						stroke-linejoin="round"
 						class="lucide lucide-chevron-left-icon lucide-chevron-left"
+						style="pointer-events: none"
 					>
 						<path d="m15 18-6-6 6-6" />
 					</svg>
 				</button>
-				<button class="m-control right">
+				<button class="m-control right" value="d">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="24"
@@ -116,6 +157,7 @@
 						stroke-linecap="round"
 						stroke-linejoin="round"
 						class="lucide lucide-chevron-right-icon lucide-chevron-right"
+						style="pointer-events: none"
 					>
 						<path d="m9 18 6-6-6-6" />
 					</svg>
@@ -123,5 +165,5 @@
 			</div>
 		</main>
 	</body>
-	<script src="./js/script.js"></script>
+	<script type="module" src="./js/script.js"></script>
 </html>

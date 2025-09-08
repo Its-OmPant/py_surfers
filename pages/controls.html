@@ -3,10 +3,70 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>PySurfers Controls</title>
+		<title>Settings | Py Surfers</title>
 		<link rel="stylesheet" href="../styles/controls.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="shortcut icon"
+			href="../assets/favicon.ico"
+			type="image/x-icon"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Caveat:wght@400..700&family=DynaPuff:wght@400..700&display=swap"
+			rel="stylesheet"
+		/>
 	</head>
 	<body>
-		hello World
+		<div class="settings">
+			<span class="title">Game Controls</span>
+			<div id="close">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="lucide lucide-circle-x-icon lucide-circle-x"
+					style="pointer-events: none"
+				>
+					<circle cx="12" cy="12" r="10" />
+					<path d="m15 9-6 6" />
+					<path d="m9 9 6 6" />
+				</svg>
+			</div>
+			<div class="controls">
+				<div class="input-box">
+					<span class="checkbox"></span>
+					<input type="checkbox" name="music" id="music" />
+					<label for="music" class="inputLabel"
+						>Background Music</label
+					>
+				</div>
+				<div class="input-box">
+					<span class="checkbox"></span>
+					<input type="checkbox" name="effects" id="effects" />
+					<label for="effects" class="inputLabel"
+						>Sound Effects</label
+					>
+				</div>
+				<div class="input-box">
+					<label for="speed" class="inputLabel"
+						>Snake Speed: <span id="speed-span">5</span></label
+					>
+					<div class="speed-btn-group">
+						<button class="btn" data-speed="5">Slow</button>
+						<button class="btn" data-speed="10">Medium</button>
+						<button class="btn" data-speed="15">Fast</button>
+						<button class="btn" data-speed="20">Super Fast</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
+	<script type="module" src="../js/controls.js"></script>
 </html>

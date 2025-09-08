@@ -1,31 +1,58 @@
-// ASSETS
-const FOOD_SOUND = new Audio("../assets/music/food.mp3");
-const GAMEOVER_SOUND = new Audio("../assets/music/gameover.mp3");
-const MOVE_SOUND = new Audio("../assets/music/move.mp3");
-const MUSIC_SOUND = new Audio("../assets/music/music.mp3");
+// ----------- ASSETS -------------
+const FOOD_EAT_EFFECT = new Audio("../assets/music/food.mp3");
+const GAMEOVER_EFFECT = new Audio("../assets/music/gameover.mp3");
+const MOVE_EFFECT = new Audio("../assets/music/move.mp3");
+const BG_MUSIC = new Audio("../assets/music/music.mp3");
 
-// ELEMENTS
+// ------------- ELEMENTS -------------
 const gameContainer = document.querySelector(".container");
 const scoreElement = document.querySelector(".score");
 const highScoreElement = document.querySelector(".highScore");
+const topButton = document.querySelector(".top");
+const bottomButton = document.querySelector(".bottom");
+const leftButton = document.querySelector(".left");
+const rightButton = document.querySelector(".right");
+const instructionsElement = document.querySelector("#instructions-container");
+const gameStartButton = document.querySelector(".start");
 
+// ---------- GLOBALS -----------
 let IS_PAUSED = false;
-// GLOBALS
-let game_speed = 8;
 let lastPaintTime = 0;
 let score = 0;
 let snake = [{ x: 8, y: 8 }];
 let food = { x: 17, y: 5 };
 let direction = { x: 0, y: 0 };
 
+// ----------- HELPER FUNCTIONS ------------
+
+function playSound(sound) {
+	sound.play();
+}
+
+function pauseSound(sound) {
+	sound.pause();
+}
+
 function randRange(start, end) {
 	return Math.round(Math.random() * (end - start) + start);
+}
+
+function playMoveEffectSound() {
+	let isbgMusicEnabled = sessionStorage.getItem("isBGMusicOn") === "true";
+	if (isbgMusicEnabled) {
+		playSound(BG_MUSIC);
+	}
+	let isEnabled = sessionStorage.getItem("isSoundEffectsOn") === "true";
+	if (isEnabled) {
+		playSound(MOVE_EFFECT);
+	}
 }
 
 function main(ctime) {
 	if (!IS_PAUSED) {
 		window.requestAnimationFrame(main);
-		if ((ctime - lastPaintTime) / 1000 < 1 / game_speed) {
+		let game_speed = sessionStorage.getItem("GAME_SPEED") ?? 5;
+		if ((ctime - lastPaintTime) / 1000 < 1 / +game_speed) {
 			return;
 		}
 		lastPaintTime = ctime;
@@ -35,11 +62,12 @@ function main(ctime) {
 
 function playPause() {
 	if (IS_PAUSED) {
+		playSound(BG_MUSIC);
 		window.requestAnimationFrame(main);
+	} else {
+		pauseSound(BG_MUSIC);
 	}
-	console.log("State: ", IS_PAUSED);
 	IS_PAUSED = !IS_PAUSED;
-	console.log("Setting State: ", IS_PAUSED);
 	return IS_PAUSED;
 }
 
@@ -65,8 +93,10 @@ function isCollided(snakeArr) {
 
 function gameEngine() {
 	if (isCollided(snake)) {
-		MUSIC_SOUND.pause();
-		GAMEOVER_SOUND.play();
+		pauseSound(BG_MUSIC);
+		let soundfxEnabled =
+			sessionStorage.getItem("isSoundEffectsOn") === "true";
+		if (soundfxEnabled) playSound(GAMEOVER_EFFECT);
 		alert("Game Over");
 		if (score > highScore) {
 			localStorage.setItem("highScore", score);
@@ -78,12 +108,17 @@ function gameEngine() {
 		direction = { x: 0, y: 0 };
 		score = 0;
 		scoreElement.innerText = 0;
-		// MUSIC_SOUND.play();
+		let isBGMusicOn = sessionStorage.getItem("isBGMusicOn") === "true";
+		if (isBGMusicOn) {
+			playSound(BG_MUSIC);
+		}
 	}
 
 	// Check if food eaten and update accordingly
 	if (snake[0].x === food.x && snake[0].y === food.y) {
-		FOOD_SOUND.play();
+		let soundfxEnabled =
+			sessionStorage.getItem("isSoundEffectsOn") === "true";
+		if (soundfxEnabled) playSound(FOOD_EAT_EFFECT);
 		score += 1;
 		scoreElement.innerText = score;
 		snake.unshift({
@@ -124,39 +159,29 @@ function gameEngine() {
 	gameContainer.appendChild(foodElement);
 }
 
-// main logic
-// MUSIC_SOUND.play();
-let highScore = localStorage.getItem("highScore");
-if (highScore == null) {
-	localStorage.setItem("highScore", 0);
-} else {
-	highScoreElement.innerText = highScore;
-}
-
-window.requestAnimationFrame(main);
-document.addEventListener("keyup", (e) => {
-	switch (e.key) {
+function validateMoveAndChangeDirection(dirString) {
+	switch (dirString) {
 		case "w":
 		case "ArrowUp":
-			MOVE_SOUND.play();
+			playMoveEffectSound();
 			direction.x = 0;
 			direction.y = -1;
 			break;
 		case "s":
 		case "ArrowDown":
-			MOVE_SOUND.play();
+			playMoveEffectSound();
 			direction.x = 0;
 			direction.y = 1;
 			break;
 		case "a":
 		case "ArrowLeft":
-			MOVE_SOUND.play();
+			playMoveEffectSound();
 			direction.x = -1;
 			direction.y = 0;
 			break;
 		case "d":
 		case "ArrowRight":
-			MOVE_SOUND.play();
+			playMoveEffectSound();
 			direction.x = 1;
 			direction.y = 0;
 			break;
@@ -164,8 +189,58 @@ document.addEventListener("keyup", (e) => {
 			playPause();
 			break;
 		default:
-			direction.x = 0;
-			direction.y = 0;
 			break;
 	}
+}
+
+// ----------- MAIN LOGIC STARTS HERE ---------------
+
+// SHOWING INSTRUCTIONS COMPONENT ON INITIAL LOAD
+gameStartButton.addEventListener("click", (e) => {
+	instructionsElement.classList.add("hidden");
+	let isBGMusicOn = sessionStorage.getItem("isBGMusicOn") === "true";
+	if (isBGMusicOn) {
+		playSound(BG_MUSIC);
+	}
+});
+
+let isInitialLoadDone = sessionStorage.getItem("isInitialLoadDone");
+
+if (!isInitialLoadDone) {
+	instructionsElement.classList.remove("hidden");
+	sessionStorage.setItem("isInitialLoadDone", true);
+}
+
+// SETTING DEFAULT VALUES
+
+let isBGMusicOn = sessionStorage.getItem("isBGMusicOn");
+let isSoundEffectsOn = sessionStorage.getItem("isSoundEffectsOn");
+let GAME_SPEED = sessionStorage.getItem("GAME_SPEED");
+
+if (!isBGMusicOn || !isSoundEffectsOn || !GAME_SPEED) {
+	isBGMusicOn = sessionStorage.setItem("isBGMusicOn", true);
+	isSoundEffectsOn = sessionStorage.setItem("isSoundEffectsOn", true);
+	GAME_SPEED = sessionStorage.setItem("GAME_SPEED", 5);
+}
+
+// SETTING HIGH SCORE
+let highScore = localStorage.getItem("highScore");
+if (highScore == null) {
+	localStorage.setItem("highScore", 0);
+} else {
+	highScoreElement.innerText = highScore;
+}
+
+// GAME LOOP CALL
+window.requestAnimationFrame(main);
+
+// GAME CONTROL EVENT LISTENERS
+document.addEventListener("keyup", (e) => {
+	validateMoveAndChangeDirection(e.key);
+});
+
+[topButton, bottomButton, leftButton, rightButton].forEach((btn) => {
+	btn.addEventListener("click", (e) => {
+		validateMoveAndChangeDirection(e.target.value);
+	});
 });

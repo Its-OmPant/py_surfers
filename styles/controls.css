@@ -11,4 +11,88 @@ body {
 	width: 100vw;
 	min-height: 100vh;
 	overflow-x: hidden;
+	font-family: "DynaPuff", system-ui;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: radial-gradient(circle, rgb(14 54 14), rgb(14 19 14));
+}
+
+.settings {
+	width: 350px;
+	height: 70vh;
+	padding: 20px 10px;
+	border-radius: 10px;
+	margin: 20px auto;
+	background-color: blanchedalmond;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	z-index: 2;
+	border: 8px solid rgb(180, 69, 69);
+	box-shadow: 0px 5px 35px #7e7e7e8f;
+}
+
+.title {
+	position: absolute;
+	top: -30px;
+	background-color: rgb(50, 207, 235);
+	padding: 10px;
+	border-top-left-radius: 25px;
+	border-bottom-right-radius: 25px;
+	border: 4px solid rgb(180, 69, 69);
+}
+
+#close {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	top: -16px;
+	right: -15px;
+	background-color: white;
+	border-radius: 24px;
+	padding: 2px;
+	color: red;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.input-box {
+	margin: 10px 0;
+	padding: 10px;
+	/* background-color: azure; */
+}
+
+.center {
+	text-align: center;
+}
+
+.btn {
+	width: 46%;
+	padding: 6px 4px;
+	margin: 10px 4px;
+	border-radius: 4px;
+	background-color: rgb(137, 138, 137);
+	border: 2px solid black;
+	color: white;
+	cursor: pointer;
+}
+
+.active {
+	background-color: rgb(47, 156, 47);
+}
+
+.inputLabel {
+	user-select: none;
+}
+
+.speed-btn-group {
+	display: flex;
+	flex-wrap: wrap;
 }
