@@ -27,7 +27,7 @@ body {
 	height: 100%;
 	position: absolute;
 	top: 0;
-	background-color: #ffffff3e;
+	background-color: #ffffff1c;
 	backdrop-filter: blur(2px);
 }
 
@@ -39,6 +39,14 @@ nav {
 	padding: 4px 10px;
 	position: relative;
 	z-index: 10;
+	color: white;
+}
+
+.right-nav {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 16px;
 }
 
 #logo {
@@ -52,19 +60,9 @@ nav {
 	letter-spacing: 1.3px;
 	font-weight: 700;
 	font-size: 1.2rem;
-	color: white;
-}
-
-.settings a,
-.settings a:hover,
-.settings a:active,
-.settings a:visited {
-	text-decoration: none;
-	color: white;
 }
 
 .score-container {
-	/* background-color: rgb(220, 219, 231); */
 	display: flex;
 	color: white;
 	justify-content: space-between;
@@ -266,6 +264,95 @@ button.start {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+/* SETTINGS CONTAINER STYLES */
+
+#settings-container {
+	width: 100vw;
+	height: 100vh;
+	background: url("../assets/images/bg-space.png");
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	backdrop-filter: blur(10px);
+	position: absolute;
+	z-index: 40;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.settings {
+	width: 350px;
+	height: 70vh;
+	padding: 20px 10px;
+	border-radius: 10px;
+	margin: 20px auto;
+	background-color: blanchedalmond;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	z-index: 2;
+	border: 8px solid rgb(180, 69, 69);
+	box-shadow: 0px 5px 35px #7e7e7e8f;
+}
+
+.title {
+	position: absolute;
+	top: -30px;
+	background-color: rgb(50, 207, 235);
+	padding: 10px;
+	border-top-left-radius: 25px;
+	border-bottom-right-radius: 25px;
+	border: 4px solid rgb(180, 69, 69);
+}
+
+#settings_close {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	top: -16px;
+	right: -15px;
+	background-color: white;
+	border-radius: 24px;
+	padding: 2px;
+	color: red;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.input-box {
+	margin: 10px 0;
+	padding: 10px;
+	/* background-color: azure; */
+}
+
+.btn {
+	width: 46%;
+	padding: 6px 4px;
+	margin: 10px 4px;
+	border-radius: 4px;
+	background-color: rgb(137, 138, 137);
+	border: 2px solid black;
+	color: white;
+	cursor: pointer;
+}
+
+.active {
+	background-color: rgb(47, 156, 47);
+}
+
+.inputLabel {
+	user-select: none;
+}
+
+.speed-btn-group {
+	display: flex;
+	flex-wrap: wrap;
 }
 
 @media screen and (min-width: 520px) {

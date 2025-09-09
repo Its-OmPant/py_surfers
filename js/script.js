@@ -1,3 +1,11 @@
+import {
+	playSound,
+	pauseSound,
+	randRange,
+	isCollided,
+	validateMoveAndChangeDirection,
+} from "./helper.js";
+
 // ----------- ASSETS -------------
 const FOOD_EAT_EFFECT = new Audio("../assets/music/food.mp3");
 const GAMEOVER_EFFECT = new Audio("../assets/music/gameover.mp3");
@@ -14,6 +22,18 @@ const leftButton = document.querySelector(".left");
 const rightButton = document.querySelector(".right");
 const instructionsElement = document.querySelector("#instructions-container");
 const gameStartButton = document.querySelector(".start");
+const body = document.querySelector("body");
+const settingsContainer = document.querySelector("#settings-container");
+const backgroundMusicCheckBox = document.querySelector("#music");
+const soundEffectCheckBox = document.querySelector("#effects");
+const speedElement = document.querySelector("#speed-span");
+const settingsCloseBtn = document.querySelector("#settings_close");
+const settingsBtn = document.querySelector("#settings-btn");
+const instructionsBtn = document.querySelector("#instructions-btn");
+const bgSelector = document.querySelector("#backgroundSelect");
+const speedButtons = Array.from(
+	document.querySelector(".speed-btn-group")?.children ?? []
+);
 
 // ---------- GLOBALS -----------
 let IS_PAUSED = false;
@@ -24,29 +44,6 @@ let food = { x: 17, y: 5 };
 let direction = { x: 0, y: 0 };
 
 // ----------- HELPER FUNCTIONS ------------
-
-function playSound(sound) {
-	sound.play();
-}
-
-function pauseSound(sound) {
-	sound.pause();
-}
-
-function randRange(start, end) {
-	return Math.round(Math.random() * (end - start) + start);
-}
-
-function playMoveEffectSound() {
-	let isbgMusicEnabled = sessionStorage.getItem("isBGMusicOn") === "true";
-	if (isbgMusicEnabled) {
-		playSound(BG_MUSIC);
-	}
-	let isEnabled = sessionStorage.getItem("isSoundEffectsOn") === "true";
-	if (isEnabled) {
-		playSound(MOVE_EFFECT);
-	}
-}
 
 function main(ctime) {
 	if (!IS_PAUSED) {
@@ -77,26 +74,6 @@ function playPause() {
 	return IS_PAUSED;
 }
 
-function isCollided(snakeArr) {
-	// If you bump into yourself
-	for (let i = 1; i < snakeArr.length; i++) {
-		if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
-			return true;
-		}
-	}
-	// If you bump into the wall
-	if (
-		snake[0].x >= 21 ||
-		snake[0].x <= 0 ||
-		snake[0].y >= 21 ||
-		snake[0].y <= 0
-	) {
-		return true;
-	}
-
-	return false;
-}
-
 function detectAndHandleCollision() {
 	if (isCollided(snake)) {
 		pauseSound(BG_MUSIC);
@@ -114,10 +91,6 @@ function detectAndHandleCollision() {
 		direction = { x: 0, y: 0 };
 		score = 0;
 		scoreElement.innerText = 0;
-		let isBGMusicOn = sessionStorage.getItem("isBGMusicOn") === "true";
-		if (isBGMusicOn) {
-			playSound(BG_MUSIC);
-		}
 	}
 }
 
@@ -146,7 +119,7 @@ function gameEngine() {
 
 	detectAndHandleCollision();
 
-	// Display the snake and food
+	// render snake
 	gameContainer.innerHTML = "";
 	snake.forEach((s, i) => {
 		const el = document.createElement("div");
@@ -162,6 +135,7 @@ function gameEngine() {
 		gameContainer.appendChild(el);
 	});
 
+	// render food
 	const foodElement = document.createElement("div");
 	foodElement.classList.add("food");
 	foodElement.style.gridRowStart = food.y;
@@ -169,43 +143,16 @@ function gameEngine() {
 	gameContainer.appendChild(foodElement);
 }
 
-function validateMoveAndChangeDirection(dirString) {
-	switch (dirString) {
-		case "w":
-		case "ArrowUp":
-			playMoveEffectSound();
-			direction.x = 0;
-			direction.y = -1;
-			break;
-		case "s":
-		case "ArrowDown":
-			playMoveEffectSound();
-			direction.x = 0;
-			direction.y = 1;
-			break;
-		case "a":
-		case "ArrowLeft":
-			playMoveEffectSound();
-			direction.x = -1;
-			direction.y = 0;
-			break;
-		case "d":
-		case "ArrowRight":
-			playMoveEffectSound();
-			direction.x = 1;
-			direction.y = 0;
-			break;
-		case "p":
-			playPause();
-			break;
-		default:
-			break;
-	}
-}
-
 // ----------- MAIN LOGIC STARTS HERE ---------------
 
 // SHOWING INSTRUCTIONS COMPONENT ON INITIAL LOAD
+let isInitialLoadDone = sessionStorage.getItem("isInitialLoadDone");
+
+if (!isInitialLoadDone) {
+	instructionsElement.classList.remove("hidden");
+	sessionStorage.setItem("isInitialLoadDone", true);
+}
+
 gameStartButton.addEventListener("click", (e) => {
 	instructionsElement.classList.add("hidden");
 	let isBGMusicOn = sessionStorage.getItem("isBGMusicOn") === "true";
@@ -214,26 +161,35 @@ gameStartButton.addEventListener("click", (e) => {
 	}
 });
 
-let isInitialLoadDone = sessionStorage.getItem("isInitialLoadDone");
+// ---------- SETTING DEFAULT VALUES -----------
 
-if (!isInitialLoadDone) {
-	instructionsElement.classList.remove("hidden");
-	sessionStorage.setItem("isInitialLoadDone", true);
+let isBGMusicKeyAvailable = sessionStorage.getItem("isBGMusicOn");
+let isSoundEffectsKeyAvailable = sessionStorage.getItem("isSoundEffectsOn");
+let GAME_SPEED_key_available = sessionStorage.getItem("GAME_SPEED");
+
+if (
+	!isBGMusicKeyAvailable ||
+	!isSoundEffectsKeyAvailable ||
+	!GAME_SPEED_key_available
+) {
+	sessionStorage.setItem("isBGMusicOn", true);
+	sessionStorage.setItem("isSoundEffectsOn", true);
+	sessionStorage.setItem("GAME_SPEED", 5);
 }
 
-// SETTING DEFAULT VALUES
+let isBGMusicOn = sessionStorage.getItem("isBGMusicOn") === "true";
+let isSoundEffectsOn = sessionStorage.getItem("isSoundEffectsOn") === "true";
+let GAME_SPEED = sessionStorage.getItem("GAME_SPEED") ?? 5;
 
-let isBGMusicOn = sessionStorage.getItem("isBGMusicOn");
-let isSoundEffectsOn = sessionStorage.getItem("isSoundEffectsOn");
-let GAME_SPEED = sessionStorage.getItem("GAME_SPEED");
+backgroundMusicCheckBox.checked = isBGMusicOn ?? false;
+soundEffectCheckBox.checked = isSoundEffectsOn ?? false;
+speedElement.innerText = GAME_SPEED;
+sessionStorage.setItem("bgImageUrl", bgSelector.value);
 
-if (!isBGMusicOn || !isSoundEffectsOn || !GAME_SPEED) {
-	isBGMusicOn = sessionStorage.setItem("isBGMusicOn", true);
-	isSoundEffectsOn = sessionStorage.setItem("isSoundEffectsOn", true);
-	GAME_SPEED = sessionStorage.setItem("GAME_SPEED", 5);
-}
+settingsCloseBtn.onclick = () => {
+	settingsContainer.classList.add("hidden");
+};
 
-// SETTING HIGH SCORE
 let highScore = localStorage.getItem("highScore");
 if (highScore == null) {
 	localStorage.setItem("highScore", 0);
@@ -241,16 +197,64 @@ if (highScore == null) {
 	highScoreElement.innerText = highScore;
 }
 
-// GAME LOOP CALL
+// ---------- GAME LOOP -----------
 window.requestAnimationFrame(main);
 
-// GAME CONTROL EVENT LISTENERS
+// ----------- EVENT LISTENERS ----------
 document.addEventListener("keyup", (e) => {
-	validateMoveAndChangeDirection(e.key);
+	if (e.key == "p" || e.key == "P") {
+		playPause();
+		return;
+	}
+	validateMoveAndChangeDirection(e.key, direction, BG_MUSIC, MOVE_EFFECT);
 });
 
 [topButton, bottomButton, leftButton, rightButton].forEach((btn) => {
 	btn.addEventListener("click", (e) => {
-		validateMoveAndChangeDirection(e.target.value);
+		validateMoveAndChangeDirection(
+			e.target.value,
+			direction,
+			BG_MUSIC,
+			MOVE_EFFECT
+		);
 	});
+});
+
+speedButtons.forEach((btn) => {
+	if (btn.dataset.speed == GAME_SPEED) {
+		btn.classList.add("active");
+	}
+});
+
+backgroundMusicCheckBox?.addEventListener("click", (e) => {
+	sessionStorage.setItem("isBGMusicOn", e.target.checked);
+});
+
+soundEffectCheckBox?.addEventListener("click", (e) => {
+	sessionStorage.setItem("isSoundEffectsOn", e.target.checked);
+});
+
+speedButtons.forEach((btn) => {
+	btn.addEventListener("click", (e) => {
+		// remove active class from all btns
+		speedButtons.forEach((btn) => btn.classList.remove("active"));
+		speedElement.innerText = e.target.dataset.speed;
+		sessionStorage.setItem("GAME_SPEED", e.target.dataset.speed);
+
+		e.target.classList.add("active");
+	});
+});
+
+settingsBtn.onclick = () => {
+	settingsContainer.classList.remove("hidden");
+};
+
+instructionsBtn.onclick = () => {
+	instructionsElement.classList.remove("hidden");
+};
+
+bgSelector.addEventListener("change", (e) => {
+	sessionStorage.setItem("bgImageUrl", e.target.value);
+	body.style.background = `url(${e.target.value})`;
+	settingsContainer.style.background = `url(${e.target.value})`;
 });

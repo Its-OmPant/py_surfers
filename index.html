@@ -18,6 +18,7 @@
 		/>
 	</head>
 	<body>
+		<div class="overlay"></div>
 		<div id="instructions-container" class="hidden">
 			<div id="instructions">
 				<h2 id="i-title">Welcome To PySnake</h2>
@@ -51,7 +52,91 @@
 				</div>
 			</div>
 		</div>
-		<div class="overlay"></div>
+		<div id="settings-container" class="hidden">
+			<div class="overlay"></div>
+
+			<div class="settings">
+				<span class="title">Game Controls</span>
+				<div id="settings_close">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-circle-x-icon lucide-circle-x"
+						style="pointer-events: none"
+					>
+						<circle cx="12" cy="12" r="10" />
+						<path d="m15 9-6 6" />
+						<path d="m9 9 6 6" />
+					</svg>
+				</div>
+				<div class="controls">
+					<div class="input-box">
+						<label for="music" class="inputLabel"
+							>Select Background :
+						</label>
+						<select name="background" id="backgroundSelect">
+							<option
+								value="../assets/images/bg-space.png"
+								selected
+							>
+								Space
+							</option>
+
+							<option value="../assets/images/bg-dessert.png">
+								Dessert
+							</option>
+							<option value="../assets/images/bg-forest.png">
+								Forest
+							</option>
+							<option value="../assets/images/bg-neon.png">
+								Neon
+							</option>
+							<option value="../assets/images/bg-pattern.png">
+								Pattern
+							</option>
+							<option value="../assets/images/bg-rocks.png">
+								Rocks
+							</option>
+						</select>
+					</div>
+					<div class="input-box">
+						<span class="checkbox"></span>
+						<input type="checkbox" name="music" id="music" />
+						<label for="music" class="inputLabel"
+							>Background Music</label
+						>
+					</div>
+					<div class="input-box">
+						<span class="checkbox"></span>
+						<input type="checkbox" name="effects" id="effects" />
+						<label for="effects" class="inputLabel"
+							>Sound Effects</label
+						>
+					</div>
+					<div class="input-box">
+						<label for="speed" class="inputLabel"
+							>Snake Speed: <span id="speed-span">5</span></label
+						>
+						<div class="speed-btn-group">
+							<button class="btn" data-speed="5">Slow</button>
+							<button class="btn" data-speed="10">Medium</button>
+							<button class="btn" data-speed="15">Fast</button>
+							<button class="btn" data-speed="20">
+								Super Fast
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<nav>
 			<div id="logo">
 				<img
@@ -62,8 +147,8 @@
 				/>
 				<span>PySurfers</span>
 			</div>
-			<div class="settings">
-				<a href="./pages/controls.html">
+			<div class="right-nav">
+				<div id="settings-btn">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						width="26"
@@ -75,13 +160,33 @@
 						stroke-linecap="round"
 						stroke-linejoin="round"
 						class="lucide lucide-settings-icon lucide-settings setting-icon"
+						style="pointer-events: none"
 					>
 						<path
 							d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"
 						/>
 						<circle cx="12" cy="12" r="3" />
 					</svg>
-				</a>
+				</div>
+				<div id="instructions-btn">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="26"
+						height="26"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-info-icon lucide-info"
+						style="pointer-events: none"
+					>
+						<circle cx="12" cy="12" r="10" />
+						<path d="M12 16v-4" />
+						<path d="M12 8h.01" />
+					</svg>
+				</div>
 			</div>
 		</nav>
 		<div class="score-container">
