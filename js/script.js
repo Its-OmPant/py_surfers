@@ -133,7 +133,7 @@ function gameEngine() {
 			x: snake[0].x + direction.x,
 			y: snake[0].y + direction.y,
 		});
-		food = { x: randRange(0, 21), y: randRange(0, 21) };
+		food = { x: randRange(1, 20), y: randRange(1, 20) };
 	}
 
 	// move the snake
