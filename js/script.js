@@ -62,10 +62,16 @@ function main(ctime) {
 
 function playPause() {
 	if (IS_PAUSED) {
-		playSound(BG_MUSIC);
+		let isBGMusicOn = sessionStorage.getItem("isBGMusicOn") === "true";
+		if (isBGMusicOn) {
+			playSound(BG_MUSIC);
+		}
 		window.requestAnimationFrame(main);
 	} else {
-		pauseSound(BG_MUSIC);
+		let isBGMusicOn = sessionStorage.getItem("isBGMusicOn") === "true";
+		if (isBGMusicOn) {
+			pauseSound(BG_MUSIC);
+		}
 	}
 	IS_PAUSED = !IS_PAUSED;
 	return IS_PAUSED;
@@ -80,9 +86,9 @@ function isCollided(snakeArr) {
 	}
 	// If you bump into the wall
 	if (
-		snake[0].x >= 20 ||
+		snake[0].x >= 21 ||
 		snake[0].x <= 0 ||
-		snake[0].y >= 20 ||
+		snake[0].y >= 21 ||
 		snake[0].y <= 0
 	) {
 		return true;
@@ -91,7 +97,7 @@ function isCollided(snakeArr) {
 	return false;
 }
 
-function gameEngine() {
+function detectAndHandleCollision() {
 	if (isCollided(snake)) {
 		pauseSound(BG_MUSIC);
 		let soundfxEnabled =
@@ -113,7 +119,9 @@ function gameEngine() {
 			playSound(BG_MUSIC);
 		}
 	}
+}
 
+function gameEngine() {
 	// Check if food eaten and update accordingly
 	if (snake[0].x === food.x && snake[0].y === food.y) {
 		let soundfxEnabled =
@@ -135,6 +143,8 @@ function gameEngine() {
 
 	snake[0].x = Math.max(snake[0].x + direction.x, 0);
 	snake[0].y = Math.max(snake[0].y + direction.y, 0);
+
+	detectAndHandleCollision();
 
 	// Display the snake and food
 	gameContainer.innerHTML = "";
