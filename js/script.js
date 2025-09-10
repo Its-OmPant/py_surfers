@@ -7,10 +7,10 @@ import {
 } from "./helper.js";
 
 // ----------- ASSETS -------------
-const FOOD_EAT_EFFECT = new Audio("../assets/music/food.mp3");
-const GAMEOVER_EFFECT = new Audio("../assets/music/gameover.mp3");
-const MOVE_EFFECT = new Audio("../assets/music/move.mp3");
-const BG_MUSIC = new Audio("../assets/music/music.mp3");
+const FOOD_EAT_EFFECT = new Audio("assets/music/food.mp3");
+const GAMEOVER_EFFECT = new Audio("assets/music/gameover.mp3");
+const MOVE_EFFECT = new Audio("assets/music/move.mp3");
+const BG_MUSIC = new Audio("assets/music/music.mp3");
 
 // ------------- ELEMENTS -------------
 const gameContainer = document.querySelector(".container");
