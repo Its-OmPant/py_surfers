@@ -312,11 +312,11 @@ button.start {
 
 #settings_close {
 	position: absolute;
-	width: 40px;
-	height: 40px;
+	width: 30px;
+	height: 30px;
 	top: -16px;
 	right: -15px;
-	background-color: white;
+	background-color: rgb(144, 144, 144);
 	border-radius: 24px;
 	padding: 2px;
 	color: red;
